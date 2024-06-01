@@ -60,11 +60,11 @@ Blocking: Preventing your opponent from getting three in a row by placing your m
 Example Game
 Here’s an example of a game:
 
-'''markdown
+```markdown
 X | O | X
 O | X |  
   | O
-'''
+```
 In this example, the player with 'X' wins by completing a diagonal line from the top-left to the bottom-right.
 
 ## Variations
