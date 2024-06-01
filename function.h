@@ -24,4 +24,104 @@ void drawfield(char board[3][3])
     std::cout << "    |      |     " << std::endl;
 }
 
+void game(char board[3][3], std::string player1, std::string player2, int position, int position2, bool stop)
+{
+    while (stop != true)
+    {
+        std::cout << "Player " << player1 << " choose your position : ";
+        std::cin >> position;
+
+        switch (position)
+        {
+        case 1:
+            board[0][0] = 'X';
+            drawfield(board);
+            break;
+        case 2:
+            board[0][1] = 'X';
+            drawfield(board);
+            break;
+        case 3:
+            board[0][2] = 'X';
+            drawfield(board);
+            break;
+        case 4:
+            board[1][0] = 'X';
+            drawfield(board);
+            break;
+        case 5:
+            board[1][1] = 'X';
+            drawfield(board);
+            break;
+        case 6:
+            board[1][2] = 'X';
+            drawfield(board);
+            break;
+        case 7:
+            board[2][0] = 'X';
+            drawfield(board);
+            break;
+        case 8:
+            board[2][1] = 'X';
+            drawfield(board);
+            break;
+        case 9:
+            board[2][2] = 'X';
+            drawfield(board);
+            break;
+        default:
+            std::cout << "Please enter a number between 1 and 9" << std::endl;
+            break;
+        }
+
+        if (position == 1 || position == 2 || position == 3 || position == 4 || position == 5 || position == 6 || position == 7 || position == 8 || position == 9)
+        {
+            std::cout << "Player " << player2 << " choose your position : ";
+            std::cin >> position2;
+            switch (position2)
+            {
+            case 1:
+                board[0][0] = 'Y';
+                drawfield(board);
+                break;
+            case 2:
+                board[0][1] = 'Y';
+                drawfield(board);
+                break;
+            case 3:
+                board[0][2] = 'Y';
+                drawfield(board);
+                break;
+            case 4:
+                board[1][0] = 'Y';
+                drawfield(board);
+                break;
+            case 5:
+                board[1][1] = 'Y';
+                drawfield(board);
+                break;
+            case 6:
+                board[1][2] = 'Y';
+                drawfield(board);
+                break;
+            case 7:
+                board[2][0] = 'Y';
+                drawfield(board);
+                break;
+            case 8:
+                board[2][1] = 'Y';
+                drawfield(board);
+                break;
+            case 9:
+                board[2][2] = 'Y';
+                drawfield(board);
+                break;
+            default:
+                std::cout << "Please enter a number between 1 and 9" << std::endl;
+                break;
+            }
+        }
+    }
+}
+
 #endif /* function_h */

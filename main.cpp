@@ -1,16 +1,21 @@
 #include <iostream>
-
+#include <time.h>
+#include <stdlib.h>
+#include <random>
 // added ui for game
 #include "function.h"
 
+char board[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
 char answer;
+int position = 0;
+int position2 = 0;
 std::string player1;
 std::string player2;
-char board[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
-int position = 0;
+bool stop = false;
 
 int main()
 {
+    std::srand(time(0));
     symbol('-', 120);
     std::cout << "\t\t\t\t\tWelcome to TIC-TAC-TOE" << std::endl;
     symbol('-', 120);
@@ -48,51 +53,13 @@ int main()
             std::cout << "Player " << player1 << " is X" << std::endl;
             std::cout << "Player " << player2 << " is O" << std::endl;
         }
-    } while (answer != 'X' && answer != 'x');
+        else if (answer == 'O' || answer == 'o')
+        {
+            std::cout << "Player " << player1 << " is O" << std::endl;
+            std::cout << "Player " << player2 << " is X" << std::endl;
+        }
+    } while (answer != 'X' && answer != 'x' && answer != 'O' && answer != 'o');
 
     drawfield(board);
-    /*
-    std::cout << "    |      |     " << std::endl;
-    std::cout << " " << board[0][0] << "  |  " << board[0][1] << "   |  " << board[0][2] << std::endl;
-    std::cout << "____|______|_____" << std::endl;
-    std::cout << "    |      |     " << std::endl;
-    std::cout << " " << board[1][0] << "  |  " << board[1][1] << "   |  " << board[1][2] << std::endl;
-    std::cout << "____|______|_____" << std::endl;
-    std::cout << "    |      |     " << std::endl;
-    std::cout << " " << board[2][0] << "  |  " << board[2][1] << "   |  " << board[2][2] << std::endl;
-    std::cout << "    |      |     " << std::endl;
-    */
-
-    std::cout << "Player " << player1 << " is X and Player " << player2 << " is O" << std::endl;
-
-    std::cout << "Player " << player1 << " choose your position : ";
-    std::cin >> position;
-
-    switch (position)
-    {
-    case 1:
-        board[0][0] = 'X';
-        drawfield(board);
-        break;
-    case 2:
-        board[0][1] = 'X';
-        drawfield(board);
-        break;
-    case 3:
-        board[0][2] = 'X';
-        drawfield(board);
-        break;
-    case 4:
-        board[1][0] = 'X';
-        drawfield(board);
-        break;
-    case 5:
-        board[1][1] = 'X';
-        drawfield(board);
-        break;
-    case 6:
-        board[1][2] = 'X';
-        drawfield(board);
-        break;
-    }
+    game(board, player1, player2, position, position2, stop);
 }
