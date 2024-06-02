@@ -5,7 +5,7 @@
 // added ui for game
 #include "function.h"
 
-char board[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
+char board[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
 char answer;
 int position = 0;
 int position2 = 0;
@@ -32,26 +32,26 @@ int main()
             std::cout << "Enter player 2 name : ";
             std::cin >> player2;
             std::cout << "Let's start the game" << std::endl;
-            std::cout << "Player 1 is " << player1 << " and player 2 is " << player2 << std::endl;
+            std::cout << "Player 1 is  : " << player1 << " and player 2 is  : " << player2 << std::endl;
             break;
         case 'n':
             std::cout << "Thanks for playing!" << std::endl;
             break;
         default:
-            std::cout << "Please enter 'y' or 'n'" << std::endl;
+            std::cout << "Please enter 'y' or 'n' : " << std::endl;
             break;
         }
     } while (answer != 'y' && answer != 'n');
 
     do
     {
-        std::cout << "Player " << player1 << "choose X or O :";
+        std::cout << "Player " << player1 << " choose X or O : ";
         std::cin >> answer;
 
         if (answer == 'X' || answer == 'x')
         {
-            std::cout << "Player " << player1 << " is X" << std::endl;
-            std::cout << "Player " << player2 << " is O" << std::endl;
+            std::cout << "Player " << player1 << " is X " << std::endl;
+            std::cout << "Player " << player2 << " is O " << std::endl;
         }
         else if (answer == 'O' || answer == 'o')
         {

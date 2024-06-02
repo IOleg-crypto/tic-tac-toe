@@ -1,5 +1,6 @@
 #ifndef function_h
 #define function_h
+
 #include <iostream>
 #include <string>
 
@@ -24,152 +25,96 @@ void drawfield(char board[3][3])
     std::cout << " " << board[2][0] << "  |  " << board[2][1] << "   |  " << board[2][2] << std::endl;
     std::cout << "    |      |     " << std::endl;
 }
-// # TODO : need to fix
-int checkwin(char board[3][3])
+
+// Function to check if a player has won
+bool checkwin(char board[3][3], char player)
 {
-
-    if (board[0][0] == board[0][1] && board[0][1] == board[0][2])
+    // Check rows and columns
+    for (int i = 0; i < 3; ++i)
     {
-        return 1;
+        if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) ||
+            (board[0][i] == player && board[1][i] == player && board[2][i] == player))
+        {
+            return true;
+        }
     }
-    if (board[0][0] == board[1][1] && board[1][1] == board[2][2])
+    // Check diagonals
+    if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
+        (board[0][2] == player && board[1][1] == player && board[2][0] == player))
     {
-        return 1;
+        return true;
     }
-    if (board[0][2] == board[1][1] && board[1][1] == board[2][0])
-    {
-        return 1;
-    }
-    if (board[1][0] == board[1][1] && board[1][1] == board[1][2])
-    {
-        return 1;
-    }
-    if (board[2][0] == board[2][1] && board[2][1] == board[2][2])
-    {
-        return 1;
-    }
-    if (board[0][0] == board[1][0] && board[1][0] == board[2][0])
-    {
-        return 1;
-    }
-    if (board[0][1] == board[1][1] && board[1][1] == board[2][1])
-    {
-        return 1;
-    }
-
-    else
-    {
-        return 0;
-    }
+    return false;
 }
-void game(char board[3][3], std::string player1, std::string player2, int position, int position2, bool stop)
+// Function to check if the board is full (draw)
+bool isBoardFull(char board[3][3])
+{
+    for (int i = 0; i < 3; ++i)
+    {
+        for (int j = 0; j < 3; ++j)
+        {
+            if (board[i][j] == ' ')
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+void game(char board[3][3], std::string player1, std::string player2, int rowls, int colowns, bool stop)
 {
     while (stop != true)
     {
-        std::cout << "Player " << player1 << " choose your position : ";
-        std::cin >> position;
+        std::cout << "Player " << player1 << " Enter the rows and columns (1-3 1-3): ";
+        std::cin >> rowls >> colowns;
+        --rowls;
+        --colowns;
 
-        switch (position)
+        if (rowls > 2 || colowns > 2 || rowls < 0 || colowns < 0 || board[rowls][colowns] != ' ')
         {
-        case 1:
-            board[0][0] = 'X';
-            drawfield(board);
-            break;
-        case 2:
-            board[0][1] = 'X';
-            drawfield(board);
-            break;
-        case 3:
-            board[0][2] = 'X';
-            drawfield(board);
-            break;
-        case 4:
-            board[1][0] = 'X';
-            drawfield(board);
-            break;
-        case 5:
-            board[1][1] = 'X';
-            drawfield(board);
-            break;
-        case 6:
-            board[1][2] = 'X';
-            drawfield(board);
-            break;
-        case 7:
-            board[2][0] = 'X';
-            drawfield(board);
-            break;
-        case 8:
-            board[2][1] = 'X';
-            drawfield(board);
-            break;
-        case 9:
-            board[2][2] = 'X';
-            drawfield(board);
-            break;
-        default:
-            std::cout << "Please enter a number between 1 and 9" << std::endl;
-            break;
+            std::cout << "Invalid input, please enter a valid position between 1 and 3 that is not already taken." << std::endl;
+            continue;
         }
 
-        if (position == 1 || position == 2 || position == 3 || position == 4 || position == 5 || position == 6 || position == 7 || position == 8 || position == 9)
+        board[rowls][colowns] = 'X';
+        drawfield(board);
+
+        if (checkwin(board, 'X'))
         {
-            std::cout << "Player " << player2 << " choose your position : ";
-            std::cin >> position2;
-            switch (position2)
-            {
-            case 1:
-                board[0][0] = 'Y';
-                drawfield(board);
-                break;
-            case 2:
-                board[0][1] = 'Y';
-                drawfield(board);
-                break;
-            case 3:
-                board[0][2] = 'Y';
-                drawfield(board);
-                break;
-            case 4:
-                board[1][0] = 'Y';
-                drawfield(board);
-                break;
-            case 5:
-                board[1][1] = 'Y';
-                drawfield(board);
-                break;
-            case 6:
-                board[1][2] = 'Y';
-                drawfield(board);
-                break;
-            case 7:
-                board[2][0] = 'Y';
-                drawfield(board);
-                break;
-            case 8:
-                board[2][1] = 'Y';
-                drawfield(board);
-                break;
-            case 9:
-                board[2][2] = 'Y';
-                drawfield(board);
-                break;
-            default:
-                std::cout << "Please enter a number between 1 and 9" << std::endl;
-                break;
-            }
-        }
-        checkwin(board);
-        if (checkwin(board) == 1)
-        {
-            stop = true;
             std::cout << "Player " << player1 << " wins!" << std::endl;
+            stop = true;
+            continue;
         }
-        else
+        if (isBoardFull(board))
         {
-
-            stop = false;
             std::cout << "Game drawn" << std::endl;
+            break;
+        }
+
+        std::cout << "Player " << player2 << " Enter the rows and columns (1-3 1-3): ";
+        std::cin >> rowls >> colowns;
+        --rowls;
+        --colowns;
+
+        if (rowls > 2 || colowns > 2 || rowls < 0 || colowns < 0 || board[rowls][colowns] != ' ')
+        {
+            std::cout << "Invalid input, please enter a valid position between 1 and 3 that is not already taken." << std::endl;
+            continue;
+        }
+        board[rowls][colowns] = 'Y';
+        drawfield(board);
+
+        if (checkwin(board, 'Y'))
+        {
+            std::cout << "Player " << player2 << " wins!" << std::endl;
+            stop = true;
+            continue;
+        }
+        if (isBoardFull(board))
+        {
+            std::cout << "Game drawn" << std::endl;
+            break;
         }
     }
 }
