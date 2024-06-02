@@ -7,8 +7,8 @@
 
 char board[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
 char answer;
-int position = 0;
-int position2 = 0;
+int rowls = 0;
+int colowns = 0;
 std::string player1;
 std::string player2;
 bool stop = false;
