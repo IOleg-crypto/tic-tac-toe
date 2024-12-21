@@ -1,65 +1,121 @@
+// main.cpp  
+
+#include "TicTacToe.h" //main functionality
+
 #include <iostream>
-#include <time.h>
-#include <stdlib.h>
-#include <random>
-// added ui for game
-#include "function.h"
+#include <ctime>
 
-char board[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
-char answer;
-int rowls = 0;
-int colowns = 0;
-std::string player1;
-std::string player2;
-bool stop = false;
-
+void DrawLine(char symbol, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        std::cout << symbol;
+    }
+    std::cout << std::endl;
+}
 int main()
 {
-    std::srand(time(0));
-    symbol('-', 120);
-    std::cout << "\t\t\t\t\tWelcome to TIC-TAC-TOE" << std::endl;
-    symbol('-', 120);
+    std::srand(static_cast<unsigned>(time(0)));
+
+    char initialBoard[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
+    std::string player1, player2;
+    char answer;
+    int rowls = 0, colowns = 0;
+    bool stop = false;
+
+    TicTacToe ticTacToe(initialBoard, player1, player2);
+
+    std::cout << "Welcome to TIC-TAC-TOE\n";
+    std::cout << "Do you want to play? (y/n): ";
+    std::cin >> answer;
+
+    if (answer != 'y')
+    {
+        std::cout << "Thanks for playing!\n";
+        return 0;
+    }
 
     do
     {
-        std::cout << "Do you want to play? (y/n) : ";
-        std::cin >> answer;
-        switch (answer)
-        {
-        case 'y':
-            std::cout << "Enter player 1 name : ";
-            std::cin >> player1;
-            std::cout << "Enter player 2 name : ";
-            std::cin >> player2;
-            std::cout << "Let's start the game" << std::endl;
-            std::cout << "Player 1 is  : " << player1 << " and player 2 is  : " << player2 << std::endl;
-            break;
-        case 'n':
-            std::cout << "Thanks for playing!" << std::endl;
-            break;
-        default:
-            std::cout << "Please enter 'y' or 'n' : " << std::endl;
-            break;
-        }
-    } while (answer != 'y' && answer != 'n');
+      std::cout << "Enter player 1 name: ";
+      std::cin >> player1;
+      std::cout << "Enter player 2 name: ";
+      std::cin >> player2;
 
-    do
+      if (player1.empty() || player2.empty())
+      {
+         std::cout << "Player names cannot be empty. Please try again.\n";
+      }
+      else if (player1 == player2)
+      {
+         std::cout << "Player names must be different. Please try again.\n";
+      }
+
+    } while (player1.empty() || player2.empty() || player1 == player2);
+
+    
+    
+    std::cout << player1 << ", choose X or O: ";
+    std::cin >> answer;
+    answer = toupper(answer);
+
+    char player1Symbol = (answer == 'X') ? 'X' : 'O';
+    char player2Symbol = (player1Symbol == 'X') ? 'O' : 'X';
+
+    while (!stop)
     {
-        std::cout << "Player " << player1 << " choose X or O : ";
-        std::cin >> answer;
+        std::cout << player1 << " enter row and column (1-3 1-3): ";
+        std::cin >> rowls >> colowns;
+        --rowls;
+        --colowns;
 
-        if (answer == 'X' || answer == 'x')
+        if (rowls < 0 || colowns < 0 || rowls > 2 || colowns > 2 || initialBoard[rowls][colowns] != ' ')
         {
-            std::cout << "Player " << player1 << " is X " << std::endl;
-            std::cout << "Player " << player2 << " is O " << std::endl;
+            std::cout << "Invalid input. Try again.\n";
+            continue;
         }
-        else if (answer == 'O' || answer == 'o')
-        {
-            std::cout << "Player " << player1 << " is O" << std::endl;
-            std::cout << "Player " << player2 << " is X" << std::endl;
-        }
-    } while (answer != 'X' && answer != 'x' && answer != 'O' && answer != 'o');
 
-    drawfield(board);
-    game(board, player1, player2, position, position2, stop);
+        initialBoard[rowls][colowns] = player1Symbol;
+        ticTacToe.DrawField(initialBoard);
+
+        if (ticTacToe.CheckWin(initialBoard, player1Symbol))
+        {
+            std::cout << player1 << " wins!\n";
+            break;
+        }
+
+        if (ticTacToe.isBoardFull(initialBoard))
+        {
+            std::cout << "Game is a draw.\n";
+            break;
+        }
+
+        std::cout << player2 << " enter row and column (1-3 1-3): ";
+        std::cin >> rowls >> colowns;
+        --rowls;
+        --colowns;
+
+        if (rowls < 0 || colowns < 0 || rowls > 2 || colowns > 2 || initialBoard[rowls][colowns] != ' ')
+        {
+            std::cout << "Invalid input. Try again.\n";
+            continue;
+        }
+
+        initialBoard[rowls][colowns] = player2Symbol;
+        ticTacToe.DrawField(initialBoard);
+
+        if (ticTacToe.CheckWin(initialBoard, player2Symbol))
+        {
+            std::cout << player2 << " wins!\n";
+            break;
+        }
+
+        if (ticTacToe.isBoardFull(initialBoard))
+        {
+            std::cout << "Game is a draw.\n";
+            break;
+        }
+    }
+
+    return 0;
 }
