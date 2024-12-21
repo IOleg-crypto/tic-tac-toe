@@ -14,9 +14,9 @@ private:
 
 public:
     TicTacToe(const char initboard[3][3], std::string player1, std::string player2);
-    bool isBoardFull(char board[3][3]);
+    bool isBoardFull(char board[3][3]) const;
     bool CheckWin(char board[3][3], char player);
-    void DrawField(char board[3][3]);
+    void DrawField(char board[3][3]) const;
 };
 
 #endif /* TICTACTOE_H */

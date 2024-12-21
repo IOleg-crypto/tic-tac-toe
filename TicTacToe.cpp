@@ -1,6 +1,6 @@
 #include "TicTacToe.h"
 
-void TicTacToe::DrawField(char board[3][3])
+void TicTacToe::DrawField(char board[3][3]) const
 {
     for (int i = 0; i < 3; ++i)
     {
@@ -28,7 +28,7 @@ TicTacToe::TicTacToe(const char initboard[3][3], std::string player1, std::strin
     }
 }
 
-bool TicTacToe::isBoardFull(char board[3][3])
+bool TicTacToe::isBoardFull(char board[3][3]) const
 {
     for (int i = 0; i < 3; ++i)
     {
