@@ -26,7 +26,19 @@ Here’s an example of a game:
 ```markdown
 X | O | X
 O | X |  
- | | O
+  | O
+```
+
+## Complie a game
+
+```bash
+./complie.sh
+```
+
+## To run code
+
+```bash
+./tic_tac_toe.exe
 ```
 
 In this example, the player with 'X' wins by completing a diagonal line from the top-left to the bottom-right.
